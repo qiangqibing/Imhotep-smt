@@ -63,6 +63,9 @@ format longg
 test_counter        = 0;
 TimeSpent_SMT_test1 = [];
 TimeSpent_CVX_test1 = [];
+
+RelativeEstimationError_SMT_test1 = [];
+RelativeEstimationError_CVX_test1 = [];
 p = 20;     % the number of sensors is fixed to 20, 5 of them under attack
 for n = [10, 25, 50, 75, 100, 150]
     % load the system
@@ -90,6 +93,7 @@ for n = [10, 25, 50, 75, 100, 150]
         estimatedAttackedSensorIndex{t}=b;
        % disp(['Execution time = ' num2str(time) ' sec']);
         TimeSpent_SMT_test1(test_counter) = time;
+        RelativeEstimationError_SMT_test1(test_counter)=norm(xhat-x0)/norm(x0);
     end
     disp(' ');
     
@@ -130,13 +134,14 @@ for n = [10, 25, 50, 75, 100, 150]
     subject to
     
     for sensorIndex= 1: internal_p
-        internal_Y{sensorIndex}==internal_O{sensorIndex}*state+attack(:,sensorIndex)
+        internal_Y{sensorIndex} == internal_O{sensorIndex}*state+attack(:,sensorIndex)
     end
     
     cvx_end
     
     time= toc;
     TimeSpent_CVX_test1(test_counter) = time;
+    RelativeEstimationError_CVX_test1(test_counter)=norm(state-x0)/norm(x0);
     
 end
 
@@ -152,6 +157,14 @@ ylabel('Time (sec)');
 
 
 
+figure;
+plot([10, 25, 50, 75, 100, 150], RelativeEstimationError_SMT_test1,'LineWidth',3)
+hold on
+
+plot([10, 25, 50, 75, 100, 150], RelativeEstimationError_CVX_test1,'LineWidth',3)
+set(gca,'FontSize',30);
+xlabel('number of states');
+ylabel('Relative Estimation Error (sec)');
 
 
 
