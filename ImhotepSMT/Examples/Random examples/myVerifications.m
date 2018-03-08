@@ -133,7 +133,7 @@ for n = [10, 25, 50, 75, 100, 150]
         catenate_Y(:,sensorIndex)=internal_Y{sensorIndex};
         catenate_O(:,:,sensorIndex)=internal_O{sensorIndex};
     end
-    save(['./Test1_states/test_n' num2str(n) '_p' num2str(p)]);
+
     save(['./dataForECOSJulia/ECOSJulia_n' num2str(internal_n) '_p' num2str(internal_p)], 'internal_n', 'internal_p', 'catenate_Y', 'catenate_O')
     
     % end
