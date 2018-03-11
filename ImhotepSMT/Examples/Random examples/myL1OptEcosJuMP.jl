@@ -11,7 +11,7 @@ Y=zeros(n,p)
 O=zeros(n,n,p)
 
 
-file = matopen("./dataForECOSJulia/ECOSJulia_n10_p20.mat")
+file = matopen("./dataForECOSJulia/ECOSJulia_n100_p20.mat")
 n=Int(read(file, "internal_n"))
 p=Int(read(file, "internal_p"))
 Y=read(file, "catenate_Y")
